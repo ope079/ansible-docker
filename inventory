@@ -1,0 +1,7 @@
+[test]
+34.105.239.181
+
+[test:vars]
+ansible_user=o_orekoya
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_private_key_file=~/.ssh/id_rsa

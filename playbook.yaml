@@ -1,0 +1,30 @@
+- hosts: docker
+  # run as the root user on the remote machine
+  become: true
+  tasks:
+  - name: 'Update all packages to their latest version'
+    apt:
+     name: "*"
+     state: latest
+     update_cache: yes     
+  - name: 'add Dockers official GPG key'
+    apt_key:
+     url: https://download.docker.com/linux/ubuntu/gpg
+     state: present
+  - name: 'Add source repository into sources list'
+    ansible.builtin.apt_repository:
+     repo: deb [arch=amd64]  http://archive.canonical.com/ubuntu bionic stable
+     state: present
+  - name: 'Install Docker Engine'
+    apt:
+     name:
+     - "docker-ce"
+     - "docker-ce-cli"
+     - "containerd.io"
+     state: latest
+     update_cache: true
+  - name: "Add user to docker group"
+    user:
+     name: o_orekoya
+     groups: docker
+     append: yes
